@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "accessMode",
+      "type": "ru.home.security.AccessMode",
+      "description": "Application access mode."
+    }
+  ]
+}
