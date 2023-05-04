@@ -6,7 +6,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConditionalOnProperty(value = "accessMode", havingValue = "full")
+@ConditionalOnProperty(value = "accessMode", havingValue = "FULL")
 public class FullAccessWebSecurityConfig extends WebSecurityConfigBase {
 
     @Override
