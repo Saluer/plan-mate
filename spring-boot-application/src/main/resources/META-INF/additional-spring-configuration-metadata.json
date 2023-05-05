@@ -1,8 +1,8 @@
 {
   "properties": [
     {
-      "name": "accessMode",
-      "type": "ru.home.security.AccessMode",
+      "name": "security.accessMode",
+      "type": "java.lang.String",
       "description": "Application access mode."
     }
   ]
