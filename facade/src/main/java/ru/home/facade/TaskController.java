@@ -5,7 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.home.model.Task;
 import ru.home.repository.TaskRepository;
+
+import java.util.Collection;
 
 @RestController
 public class TaskController {
@@ -18,8 +21,8 @@ public class TaskController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public void getMyTasks() {
-        taskRepository.findAll();
+    public Collection<Task> getMyTasks() {
+        return taskRepository.findAll();
     }
 
 }
