@@ -25,9 +25,11 @@ public class TaskController {
         return taskRepository.findAll();
     }
 
-    @PutMapping(path = "save", consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public Task save(Task task) {
+    @PutMapping(path = "save",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public Task save(@RequestBody Task task) {
         return taskRepository.save(task);
     }
 
