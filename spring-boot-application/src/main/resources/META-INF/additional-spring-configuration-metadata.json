@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "security.accessMode",
+      "type": "java.lang.String",
+      "description": "Application access mode."
+    }
+  ]
+}
