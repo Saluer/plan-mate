@@ -1,36 +1,38 @@
 package ru.home.facade;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import ru.home.api.TaskService;
 import ru.home.model.Task;
-import ru.home.repository.TaskRepository;
 
 import java.util.Collection;
 
+@RequiredArgsConstructor
 @RestController
+@Slf4j
 @RequestMapping("/tasks")
 public class TaskController {
-    private final static Logger LOGGER = LoggerFactory.getLogger(TaskController.class);
 
-    private final TaskRepository taskRepository;
+    private final TaskService taskService;
 
-    public TaskController(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
-    }
-
+    @PreAuthorize("not anonymous")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public Collection<Task> getMyTasks() {
-        return taskRepository.findAll();
+    public Collection<Task> getMyTasks(@NotNull Authentication authentication) {
+        return taskService.findMyTasks(authentication.getName());
     }
 
+    @PreAuthorize("not anonymous and hasAuthority('SAVE')")
     @PutMapping(path = "save",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public Task save(@RequestBody Task task) {
-        return taskRepository.save(task);
+        return taskService.save(task);
     }
 
 }

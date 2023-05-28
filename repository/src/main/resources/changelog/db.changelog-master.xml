@@ -4,4 +4,8 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
     <include file="logs/1_init.xml" relativeToChangelogFile="true"/>
+    <include file="logs/2_add_status_modified_at_creator_name_description_to_task.xml" relativeToChangelogFile="true"/>
+    <include file="logs/3_add_contraints.xml" relativeToChangelogFile="true"/>
+    <include file="logs/4_rename_modified_column.xml" relativeToChangelogFile="true"/>
+    <include file="logs/5_remove_contraints.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

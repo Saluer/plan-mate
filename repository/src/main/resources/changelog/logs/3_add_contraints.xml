@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet id="3_add_contraints" author="Alexey">
+        <addNotNullConstraint tableName="task" columnName="status"/>
+        <addNotNullConstraint tableName="task" columnName="created_at"/>
+        <addNotNullConstraint tableName="task" columnName="modifiedAt"/>
+        <addNotNullConstraint tableName="task" columnName="name"/>
+        <addNotNullConstraint tableName="task" columnName="creator_name"/>
+    </changeSet>
+</databaseChangeLog>

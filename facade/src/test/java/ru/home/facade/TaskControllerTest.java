@@ -7,16 +7,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import ru.home.api.TaskService;
 import ru.home.model.Task;
-import ru.home.repository.TaskRepository;
 import ru.home.security.FullAccessWebSecurityConfig;
 
 import java.util.List;
 import java.util.UUID;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -30,7 +33,7 @@ class TaskControllerTest {
     private final MockMvc mockMvc;
 
     @MockBean
-    private TaskRepository taskRepository;
+    private TaskService taskService;
 
     @Autowired
     TaskControllerTest(MockMvc mockMvc) {
@@ -39,8 +42,8 @@ class TaskControllerTest {
 
     @BeforeEach
     void setUp() {
-        when(taskRepository.findAll()).thenReturn(List.of(new Task()));
-        when(taskRepository.save(Mockito.any(Task.class)))
+        when(taskService.findMyTasks(any(String.class))).thenReturn(List.of(new Task()));
+        when(taskService.save(Mockito.any(Task.class)))
                 .thenAnswer(invocation -> {
                     Task task = invocation.getArgument(0);
                     task.setId(UUID.randomUUID());
@@ -49,9 +52,11 @@ class TaskControllerTest {
     }
 
     @Test
+    @WithMockUser("Alexey")
     void getMyTasks() throws Exception {
         mockMvc.perform(get("/tasks/"))
                 .andExpect(status().isOk())
+                .andExpect(handler().method(TaskController.class.getMethod("getMyTasks", Authentication.class)))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
@@ -65,6 +70,7 @@ class TaskControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(handler().method(TaskController.class.getMethod("save", Task.class)))
+                .andExpect(jsonPath("$.id").exists())
                 .andExpect(jsonPath("$.name").value("Smth"));
 
     }

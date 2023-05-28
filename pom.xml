@@ -17,6 +17,8 @@
         <module>spring-boot-application</module>
         <module>repository</module>
         <module>model</module>
+        <module>service</module>
+        <module>api</module>
     </modules>
 
     <groupId>ru.home</groupId>
@@ -75,6 +77,10 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.2.23</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
         </dependency>
     </dependencies>
 
